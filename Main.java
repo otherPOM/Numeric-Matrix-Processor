@@ -8,36 +8,46 @@ public class Main {
     private static final Scanner scan = new Scanner(System.in);
 
     public static void main(String[] args) {
-        var an = scan.nextInt();
-        var am = scan.nextInt();
-        var a = new int[an][am];
-        for (int i = 0; i < an; i++) {
-            for (int j = 0; j < am; j++) {
-                a[i][j] = scan.nextInt();
+        var a = readMatrix();
+        var b = readMatrix();
+
+        var sum = sumMatrices(a, b);
+
+        printMatrix(sum);
+    }
+
+    private static int[][] readMatrix() {
+        var n = scan.nextInt();
+        var m = scan.nextInt();
+        var matrix = new int[n][m];
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                matrix[i][j] = scan.nextInt();
             }
         }
-        var bn = scan.nextInt();
-        var bm = scan.nextInt();
-        if (an != bn || am != bm) {
+        return matrix;
+    }
+
+    private static void printMatrix(int[][] matrix) {
+        if (matrix != null) {
+            Arrays.stream(matrix).forEach(row ->
+                    System.out.println(Arrays.stream(row)
+                            .mapToObj(String::valueOf)
+                            .collect(Collectors.joining(" "))));
+        }
+    }
+
+    private static int[][] sumMatrices(int[][] a, int[][] b) {
+        if (a.length != b.length || a[0].length != b[0].length) {
             System.out.println("ERROR");
-            return;
+            return null;
         }
-        var b = new int[bn][bm];
-        for (int i = 0; i < bn; i++) {
-            for (int j = 0; j < bm; j++) {
-                b[i][j] = scan.nextInt();
+        var sum = new int[a.length][a[0].length];
+        for (int i = 0; i < sum.length; i++) {
+            for (int i1 = 0; i1 < sum[i].length; i1++) {
+                sum[i][i1] = a[i][i1] + b[i][i1];
             }
         }
-
-        for (int i = 0; i < a.length; i++) {
-            for (int i1 = 0; i1 < a[i].length; i1++) {
-                a[i][i1] += b[i][i1];
-            }
-        }
-
-        Arrays.stream(a).forEach(row ->
-                System.out.println(Arrays.stream(row)
-                .mapToObj(String::valueOf)
-                .collect(Collectors.joining(" "))));
+        return sum;
     }
 }
