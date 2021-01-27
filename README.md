@@ -30,3 +30,9 @@ Write a program that does the following:
 The program should keep repeating this until the `"Exit"` option is chosen.
 
 If some operation cannot be performed, output a warning message.
+
+## Stage 4
+In this stage, you should add an option to transpose matrices. If the user chooses this option, your program should provide them with 4 types of transposition and ask them to choose one. Then it should read the matrix, transpose it, and output the result. Refer to the example to see the exact format.
+
+Note that your program should still be able to do all operations on matrices that you've implemented in the previous stage.
+

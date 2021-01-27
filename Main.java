@@ -32,6 +32,16 @@ public class Main {
                     res = multiplyMatrices(readMatrix(" first"),
                             readMatrix(" second"));
                     break;
+                case 4:
+                    System.out.print("\n" +
+                            "1. Main diagonal\n" +
+                            "2. Side diagonal\n" +
+                            "3. Vertical line\n" +
+                            "4. Horizontal line\n" +
+                            "Your choice: ");
+                    var line = scan.nextInt();
+                    res = transpose(readMatrix(""), line);
+                    break;
                 case 0:
                 default:
                     return;
@@ -106,6 +116,47 @@ public class Main {
                     res[i][j] += a[i][t] * b[t][j];
                 }
             }
+        }
+        return res;
+    }
+
+    private static double[][] transpose(double[][] matrix, int line) {
+        double[][] res;
+        switch (line) {
+            default:
+            case 1:
+                res = new double[matrix[0].length][matrix.length];
+                for (int i = 0; i < matrix.length; i++) {
+                    for (int j = 0; j < matrix[i].length; j++) {
+                        res[j][i] = matrix[i][j];
+                    }
+                }
+                break;
+            case 2:
+                res = new double[matrix[0].length][matrix.length];
+                for (int i = 0; i < matrix.length; i++) {
+                    for (int j = 0; j < matrix[i].length; j++) {
+                        res[res.length - 1 - j][res[0].length - 1 - i]
+                                = matrix[i][j];
+                    }
+                }
+                break;
+            case 3:
+                res = new double[matrix.length][matrix[0].length];
+                for (int i = 0; i < matrix.length; i++) {
+                    for (int j = 0; j < matrix[i].length; j++) {
+                        res[i][matrix[i].length - 1 - j] = matrix[i][j];
+                    }
+                }
+                break;
+            case 4:
+                res = new double[matrix.length][matrix[0].length];
+                for (int i = 0; i < matrix.length; i++) {
+                    for (int j = 0; j < matrix[i].length; j++) {
+                        res[matrix.length - 1 - i][j] = matrix[i][j];
+                    }
+                }
+                break;
         }
         return res;
     }
