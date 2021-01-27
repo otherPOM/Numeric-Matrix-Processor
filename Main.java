@@ -14,6 +14,7 @@ public class Main {
                     "3. Multiply matrices\n" +
                     "4. Transpose matrix\n" +
                     "5. Calculate a determinant\n" +
+                    "6. Inverse matrix\n" +
                     "0. Exit");
             System.out.print("Your choice: ");
             var choice = scan.nextInt();
@@ -48,14 +49,19 @@ public class Main {
                     res = new double[1][1];
                     res[0][0] = determinant(readMatrix(""));
                     break;
+                case 6:
+                    res = inverse(readMatrix(""));
+                    break;
                 case 0:
                 default:
                     return;
             }
 
-            System.out.println("The result is:");
-            printMatrix(res);
-            System.out.println();
+            if (res != null && !Double.isNaN(res[0][0])) {
+                System.out.println("The result is:");
+                printMatrix(res);
+                System.out.println();
+            }
         }
     }
 
@@ -74,7 +80,6 @@ public class Main {
     }
 
     private static void printMatrix(double[][] matrix) {
-        if (matrix != null && !Double.isNaN(matrix[0][0])) {
             Arrays.stream(matrix).forEach(row ->
                     System.out.println(Arrays.stream(row)
                             .mapToObj(x -> {
@@ -83,7 +88,6 @@ public class Main {
                                         : String.valueOf(x);
                             })
                             .collect(Collectors.joining(" "))));
-        }
     }
 
     private static double[][] sumMatrices(double[][] a, double[][] b) {
@@ -197,5 +201,21 @@ public class Main {
             i1 = i == row ? i1 : i1 + 1;
         }
         return sub;
+    }
+
+    private static double[][] inverse(double[][] matrix) {
+        return multiplyMatrixByConst(transpose(cofactorsMatrix(matrix), 1),
+                1 / determinant(matrix));
+    }
+
+    private static double[][] cofactorsMatrix(double[][] matrix) {
+        var res = new double[matrix.length][matrix[0].length];
+        for (int i = 0; i < res.length; i++) {
+            for (int j = 0; j < res[i].length; j++) {
+                res[i][j] = Math.pow(-1, i + j)
+                        * determinant(subMatrix(matrix, i, j));
+            }
+        }
+        return res;
     }
 }

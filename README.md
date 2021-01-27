@@ -39,3 +39,7 @@ Note that your program should still be able to do all operations on matrices tha
 ## Stage 5
 In this stage, your program should support calculating the determinant of a matrix. Refer to the example to see how it should be implemented.
 
+## Stage 6
+In this stage, your program should support finding the inverse of a matrix. Refer to the example to see how it should be implemented.
+
+Note that in some cases the inverse of a matrix does not exist. In such cases, your program should output a warning message.
