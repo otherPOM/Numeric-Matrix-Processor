@@ -8,42 +8,75 @@ public class Main {
     private static final Scanner scan = new Scanner(System.in);
 
     public static void main(String[] args) {
-        var a = readMatrix();
-        var c = scan.nextInt();
+        while (true) {
+            System.out.println("1. Add matrices\n" +
+                    "2. Multiply matrix by a constant\n" +
+                    "3. Multiply matrices\n" +
+                    "0. Exit");
+            System.out.print("Your choice: ");
+            var choice = scan.nextInt();
 
-        var sum = multiplyMatrixByConst(a, c);
+            double[][] res;
+            switch (choice) {
+                case 1:
+                    res = sumMatrices(readMatrix(" first"),
+                            readMatrix(" second"));
+                    break;
+                case 2:
+                    var matrix = readMatrix("");
+                    System.out.print("Enter constant: ");
+                    var c = scan.nextDouble();
+                    res = multiplyMatrixByConst(matrix, c);
+                    break;
+                case 3:
+                    res = multiplyMatrices(readMatrix(" first"),
+                            readMatrix(" second"));
+                    break;
+                case 0:
+                default:
+                    return;
+            }
 
-        printMatrix(sum);
+            System.out.println("The result is:");
+            printMatrix(res);
+            System.out.println();
+        }
     }
 
-    private static int[][] readMatrix() {
+    private static double[][] readMatrix(String name) {
+        System.out.printf("Enter size of%s matrix: ", name);
         var n = scan.nextInt();
         var m = scan.nextInt();
-        var matrix = new int[n][m];
+        System.out.printf("Enter%s matrix:" + System.lineSeparator(), name);
+        var matrix = new double[n][m];
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < m; j++) {
-                matrix[i][j] = scan.nextInt();
+                matrix[i][j] = scan.nextDouble();
             }
         }
         return matrix;
     }
 
-    private static void printMatrix(int[][] matrix) {
+    private static void printMatrix(double[][] matrix) {
         if (matrix != null) {
             Arrays.stream(matrix).forEach(row ->
                     System.out.println(Arrays.stream(row)
-                            .mapToObj(String::valueOf)
+                            .mapToObj(x -> {
+                                var y = (int) x;
+                                return y == x ? String.valueOf(y)
+                                        : String.valueOf(x);
+                            })
                             .collect(Collectors.joining(" "))));
         }
     }
 
-    private static int[][] sumMatrices(int[][] a, int[][] b) {
+    private static double[][] sumMatrices(double[][] a, double[][] b) {
         if (a.length != b.length || a[0].length != b[0].length) {
             System.out.println("ERROR");
             return null;
         }
 
-        var sum = new int[a.length][a[0].length];
+        var sum = new double[a.length][a[0].length];
         for (int i = 0; i < sum.length; i++) {
             for (int i1 = 0; i1 < sum[i].length; i1++) {
                 sum[i][i1] = a[i][i1] + b[i][i1];
@@ -52,11 +85,28 @@ public class Main {
         return sum;
     }
 
-    private static int[][] multiplyMatrixByConst(int[][] matrix, int constant) {
+    private static double[][] multiplyMatrixByConst(double[][] matrix, double constant) {
         return Arrays.stream(matrix)
                 .map(row -> Arrays.stream(row)
                         .map(operand -> operand * constant)
                         .toArray())
-                .toArray(int[][]::new);
+                .toArray(double[][]::new);
+    }
+
+    private static double[][] multiplyMatrices(double[][] a, double[][] b) {
+        if (a[0].length != b.length) {
+            System.out.println("ERROR");
+            return null;
+        }
+
+        var res = new double[a.length][b[0].length];
+        for (int i = 0; i < a.length; i++) {
+            for (int j = 0; j < b[i].length; j++) {
+                for (int t = 0; t < b.length; t++) {
+                    res[i][j] += a[i][t] * b[t][j];
+                }
+            }
+        }
+        return res;
     }
 }

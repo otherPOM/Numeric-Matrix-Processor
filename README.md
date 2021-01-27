@@ -16,3 +16,17 @@ Write a program that:
 1. reads a matrix and a constant,
 2. outputs the result of their multiplication.
 
+## Stage 3
+In this stage, you should write a program that can do all operations on matrices that you've learned.
+
+Write a program that does the following:
+
+1. Prints a menu consisting of 4 options. The example shows what the menu should look like.
+2. Reads the user's choice.
+3. Reads all data (matrices, constants) needed to perform the chosen operation. The example shows the input format in each case.
+4. Calculates the result and outputs it. The example shows how your output should look like.
+5. Repeats all these steps.
+
+The program should keep repeating this until the `"Exit"` option is chosen.
+
+If some operation cannot be performed, output a warning message.
