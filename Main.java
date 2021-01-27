@@ -12,6 +12,8 @@ public class Main {
             System.out.println("1. Add matrices\n" +
                     "2. Multiply matrix by a constant\n" +
                     "3. Multiply matrices\n" +
+                    "4. Transpose matrix\n" +
+                    "5. Calculate a determinant\n" +
                     "0. Exit");
             System.out.print("Your choice: ");
             var choice = scan.nextInt();
@@ -42,6 +44,10 @@ public class Main {
                     var line = scan.nextInt();
                     res = transpose(readMatrix(""), line);
                     break;
+                case 5:
+                    res = new double[1][1];
+                    res[0][0] = determinant(readMatrix(""));
+                    break;
                 case 0:
                 default:
                     return;
@@ -68,7 +74,7 @@ public class Main {
     }
 
     private static void printMatrix(double[][] matrix) {
-        if (matrix != null) {
+        if (matrix != null && !Double.isNaN(matrix[0][0])) {
             Arrays.stream(matrix).forEach(row ->
                     System.out.println(Arrays.stream(row)
                             .mapToObj(x -> {
@@ -159,5 +165,37 @@ public class Main {
                 break;
         }
         return res;
+    }
+
+    private static double determinant(double[][] matrix) {
+        if (matrix.length != matrix[0].length) {
+            System.out.println("ERROR");
+            return Double.NaN;
+        }
+
+        var res = 0d;
+
+        if (matrix.length == 1) {
+            return matrix[0][0];
+        }
+
+        for (int i = 0; i < matrix.length; i++) {
+            res += matrix[0][i] * Math.pow(-1, i) * determinant(subMatrix(matrix, 0, i));
+        }
+        return res;
+    }
+
+    private static double[][] subMatrix(double[][] matrix, int row, int column) {
+        var sub = new double[matrix.length - 1][matrix[0].length - 1];
+        for (int i = 0, i1 = 0; i < matrix.length; i++) {
+            for (int j = 0, j1 = 0; j < matrix[i].length; j++) {
+                if (i != row && j != column) {
+                    sub[i1][j1] = matrix[i][j];
+                    j1++;
+                }
+            }
+            i1 = i == row ? i1 : i1 + 1;
+        }
+        return sub;
     }
 }

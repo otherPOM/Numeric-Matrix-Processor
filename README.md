@@ -36,3 +36,6 @@ In this stage, you should add an option to transpose matrices. If the user choos
 
 Note that your program should still be able to do all operations on matrices that you've implemented in the previous stage.
 
+## Stage 5
+In this stage, your program should support calculating the determinant of a matrix. Refer to the example to see how it should be implemented.
+
