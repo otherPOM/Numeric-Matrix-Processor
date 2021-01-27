@@ -9,9 +9,9 @@ public class Main {
 
     public static void main(String[] args) {
         var a = readMatrix();
-        var b = readMatrix();
+        var c = scan.nextInt();
 
-        var sum = sumMatrices(a, b);
+        var sum = multiplyMatrixByConst(a, c);
 
         printMatrix(sum);
     }
@@ -42,6 +42,7 @@ public class Main {
             System.out.println("ERROR");
             return null;
         }
+
         var sum = new int[a.length][a[0].length];
         for (int i = 0; i < sum.length; i++) {
             for (int i1 = 0; i1 < sum[i].length; i1++) {
@@ -49,5 +50,13 @@ public class Main {
             }
         }
         return sum;
+    }
+
+    private static int[][] multiplyMatrixByConst(int[][] matrix, int constant) {
+        return Arrays.stream(matrix)
+                .map(row -> Arrays.stream(row)
+                        .map(operand -> operand * constant)
+                        .toArray())
+                .toArray(int[][]::new);
     }
 }

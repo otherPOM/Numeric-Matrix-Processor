@@ -11,3 +11,8 @@ Each matrix in the input is given in the following way: the first line contains 
 
 Output the result in the same way but don't print the dimensions of the matrix.
 
+## Stage 2
+Write a program that:
+1. reads a matrix and a constant,
+2. outputs the result of their multiplication.
+
